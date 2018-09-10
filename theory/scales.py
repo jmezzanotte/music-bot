@@ -1,8 +1,13 @@
 __author__ = 'John Mezzanotte'
 
+FLAT_SYMBOL = 'b'
+SHARP_SYMBOL = '#'
 
-CHROMATIC_SCALE_SHARP = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b']
-CHROMATIC_SCALE_FLAT = ['c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab', 'a', 'bb', 'b']
+CHROMATIC_SCALE_SHARP = ['c', 'c{}'.format(SHARP_SYMBOL), 'd', 'd{}'.format(SHARP_SYMBOL), 'e', 'f',
+                         'f{}'.format(SHARP_SYMBOL), 'g', 'g{}'.format(SHARP_SYMBOL), 'a', 'a{}'.format(SHARP_SYMBOL),
+                         'b']
+CHROMATIC_SCALE_FLAT = ['c', 'd{}'.format(FLAT_SYMBOL), 'd', 'e{}'.format(FLAT_SYMBOL), 'e', 'f',
+                        'g{}'.format(FLAT_SYMBOL),'g', 'a{}'.format(FLAT_SYMBOL), 'a', 'b{}'.format(FLAT_SYMBOL), 'b']
 
 ROOT = 0
 HALF_STEP = 1
@@ -10,8 +15,6 @@ WHOLE_STEP = 2
 
 MAJOR_SCALE_FORMULA = [ROOT, WHOLE_STEP, WHOLE_STEP, HALF_STEP, WHOLE_STEP, WHOLE_STEP, WHOLE_STEP]
 MINOR_SCALE_FORMULA = [ROOT, WHOLE_STEP, HALF_STEP, WHOLE_STEP, WHOLE_STEP, HALF_STEP, WHOLE_STEP]
-
-FLAT_SYMBOL = 'b'
 
 TONIC = 0
 SUPERTONIC = 1
@@ -93,7 +96,6 @@ class DiatonicScale(ChromaticScale):
 
         self.__formula = formula
 
-
     @property
     def tonic(self):
         return self.scale()[TONIC]
@@ -139,13 +141,17 @@ class Major(DiatonicScale):
         return ' '.join([note.upper() if len(note) == 1 else note[0].upper() + note[1] for note in self.scale()])
 
     def scale(self):
-        return [note.upper() if len(note) == 1 else note[0].upper() + note[1] for note in super(Major, self).scale()]
+        scale = [note.upper() if len(note) == 1 else note[0].upper() + note[1] for note in super(Major, self).scale()]
+        if self.root == 'gb':
+            # Correction for G flat major
+            scale[scale.index('B')] = 'Cb'
+        return scale
 
 
 class Minor(DiatonicScale):
 
     def __init__(self, root='a'):
-        super(Minor, self).__init__(root=root, major=False, use_flats=['d'], formula=MINOR_SCALE_FORMULA)
+        super(Minor, self).__init__(root=root, major=False, use_flats=['c', 'd', 'f', 'g'], formula=MINOR_SCALE_FORMULA)
 
     def __str__(self):
         return ' '.join(self.scale())
