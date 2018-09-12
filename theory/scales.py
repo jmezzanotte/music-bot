@@ -50,6 +50,7 @@ class ChromaticScale:
         chromatic_scale = CHROMATIC_SCALE_FLAT if len(self.root) == 2 and len(self.root.split(FLAT_SYMBOL)) >= 2 or \
                                                   self.root in self.use_flats else CHROMATIC_SCALE_SHARP
 
+
         return chromatic_scale[chromatic_scale.index(self.root):] + \
             chromatic_scale[:chromatic_scale.index(self.root) - len(chromatic_scale)]
 
@@ -141,10 +142,27 @@ class Major(DiatonicScale):
         return ' '.join([note.upper() if len(note) == 1 else note[0].upper() + note[1] for note in self.scale()])
 
     def scale(self):
+
+        cb_flag = False
+        if self.root == 'cb':
+            cb_flag = True
+            self.root = 'c'
+
         scale = [note.upper() if len(note) == 1 else note[0].upper() + note[1] for note in super(Major, self).scale()]
+
+        if cb_flag:
+            scale = ["{0}{1}".format(note, 'b') for note in scale]
+            # Change the root back
+            self.root = 'cb'
+
         if self.root == 'gb':
             # Correction for G flat major
             scale[scale.index('B')] = 'Cb'
+
+        # F Sharp correction
+        if self.root == 'f#':
+            scale[scale.index('F')] = 'E#'
+
         return scale
 
 
@@ -152,6 +170,13 @@ class Minor(DiatonicScale):
 
     def __init__(self, root='a'):
         super(Minor, self).__init__(root=root, major=False, use_flats=['c', 'd', 'f', 'g'], formula=MINOR_SCALE_FORMULA)
+
+    def scale(self):
+
+        scale = super(Minor, self).scale()
+        if self.root == 'eb':
+            scale[scale.index('b')] = 'cb'
+        return scale
 
     def __str__(self):
         return ' '.join(self.scale())

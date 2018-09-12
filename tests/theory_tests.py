@@ -13,11 +13,12 @@ class TestScale(unittest.TestCase):
             'e': ['E', 'F#', 'G#', 'A', 'B', 'C#', 'D#'],
             'b': ['B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#'],
             'f': ['F', 'G', 'A', 'Bb', 'C', 'D', 'E'],
+            'bb': ['Bb', 'C', 'D', 'Eb', 'F', 'G', 'A'],
             'eb': ['Eb', 'F', 'G', 'Ab', 'Bb', 'C', 'D'],
             'ab': ['Ab', 'Bb', 'C', 'Db', 'Eb', 'F', 'G'],
             'db': ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'C'],
             'gb': ['Gb', 'Ab', 'Bb', 'Cb', 'Db', 'Eb', 'F'],
-            'bb': ['Bb', 'C', 'D', 'Eb', 'F', 'G', 'A']
+
 
         }
         self.minor_scale_dict = {
@@ -25,6 +26,7 @@ class TestScale(unittest.TestCase):
             'c': ['c', 'd', 'eb', 'f', 'g', 'ab', 'bb'],
             'd': ['d', 'e', 'f', 'g', 'a', 'bb', 'c'],
             'e': ['e', 'f#', 'g', 'a', 'b', 'c', 'd'],
+            'eb': ['eb','f', 'gb', 'ab', 'bb', 'cb', 'db'],
             'f': ['f', 'g', 'ab', 'bb', 'c', 'db', 'eb'],
             'g#': ['g#', 'a#', 'b', 'c#', 'd#', 'e', 'f#'],
             'g': ['g', 'a', 'bb', 'c', 'd', 'eb', 'f']
